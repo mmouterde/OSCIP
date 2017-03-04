@@ -58,8 +58,8 @@ function retreiveDockerFile(dockerFileURL, workingDir) {
 function runTest(workingDirectory, dockerTag, logCallback) {
     return new Promise(function (resolve, reject) {
 
-        //const buildProcess = spawn('docker', ['run', dockerTag, '--rm', '-v', './output:./output'], {cwd: workingDirectory});
-        const buildProcess = spawn('node', ['--version'], {cwd: workingDirectory});
+        const buildProcess = spawn('docker', ['run', dockerTag, '--rm', '-v', './output:./output'], {cwd: workingDirectory});
+        //const buildProcess = spawn('node', ['--version'], {cwd: workingDirectory});
 
         buildProcess.stdout.on('data', data => {
             logCallback(`OUT ${data}`);
@@ -82,8 +82,8 @@ function runTest(workingDirectory, dockerTag, logCallback) {
 function runBuild(workingDirectory, gitRepo, logCallback, dockerTag) {
     return new Promise(function (resolve, reject) {
 
-        //const buildProcess = spawn('docker', ['build', '.', '--build-arg', 'GIT_REPO=' + gitRepo, '-t', dockerTag], {cwd: workingDirectory});
-        const buildProcess = spawn('node', ['--version'], {cwd: workingDirectory});
+        const buildProcess = spawn('docker', ['build', '.', '--build-arg', 'GIT_REPO=' + gitRepo, '-t', dockerTag], {cwd: workingDirectory});
+        //const buildProcess = spawn('node', ['--version'], {cwd: workingDirectory});
 
         buildProcess.stdout.on('data', data => {
             logCallback(`OUT ${data}`);

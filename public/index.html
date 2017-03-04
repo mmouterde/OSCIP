@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Continuous Delivery</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+
+<div class="container ">
+    <div class="page-header">
+        <h1>Continuous Delivery</h1>
+    </div>
+    <form>
+        <div class="form-group">
+            <label for="dockerURL">Dockerfile URL :</label>
+            <input id="dockerURL" type="text" class="form-control" value="http://localhost:9000/Dockerfile">
+        </div>
+        <div class="form-group">
+            <label for="gitRepo">Git Repo URL :</label>
+            <input id="gitRepo" type="text" class="form-control" value="https://github.com/ruanyl/sort-it">
+        </div>
+        <button type="submit" class="btn btn-default" onClick="post(event)">Build</button>
+
+    </form>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-body" style="color:white;background-color: grey;font-family: monospace">
+            <div id="log"></div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var socket = io.connect('http://localhost:9000');
+    socket.on('connect', function (data) {
+        socket.emit('join', 'Hello World from client');
+    });
+    function post(event) {
+        event.preventDefault();
+
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
+
+        fetch("http://localhost:9000/api/hey/repo/builds", {
+            method: "POST",
+            headers: headers,
+            body: '{"dockerFileURL":"' + document.getElementById('dockerURL').value + '","gitRepo":"' + document.getElementById('gitRepo').value + '"}'
+        }).then(function (response) {
+            response.json().then(function (json) {
+                socket.on(json.pid, function (data) {
+                    document.getElementById('log').innerText += "\n" + data.msg;
+                });
+            });
+        })
+    }
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</html>

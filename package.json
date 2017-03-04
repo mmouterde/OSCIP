@@ -1,0 +1,37 @@
+{
+  "name": "oscip",
+  "version": "1.0.0",
+  "description": "Open source Continuous Integration Plateform",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmouterde/OSCIP.git"
+  },
+  "keywords": [
+    "IC",
+    "continuous",
+    "integration",
+    "build",
+    "automation"
+  ],
+  "author": "mmouterde",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mmouterde/OSCIP/issues"
+  },
+  "homepage": "https://github.com/mmouterde/OSCIP#readme",
+  "dependencies": {
+    "bluebird": "3.5.0",
+    "body-parser": "^1.17.0",
+    "crypto": "0.0.3",
+    "express": "4.15.0",
+    "fs-extra": "^2.0.0",
+    "request": "^2.80.0",
+    "request-promise": "^4.1.1",
+    "sanitize-filename": "1.6.1",
+    "socket.io": "^1.7.3"
+  }
+}

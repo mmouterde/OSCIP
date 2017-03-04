@@ -31,6 +31,8 @@ Ce qui manquera vraiment :
 Idée ensuite : 
 - condition sur le déclenchement (ex : si nouveau  package.json.version) 
 - proposer des dockers file type (ex : npm install + npm run test)
+- mounter un volume pour que la tache docker y copie tous ce qui sera "archivé" dans le job (xunit, lcov, articact.tar.gz)
+- récupérer les logs sysout/syserr
 
 cf les retours de la béta de pipeline pour inspirer : https://bitbucket.org/site/master/issues?status=new&status=open&component=Pipelines&page=2
 
